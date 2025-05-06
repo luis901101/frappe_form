@@ -1,0 +1,35 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        enabled: true
+        options:
+          # Options configure how source code is generated for every
+          # `@JsonSerializable`-annotated class in the package.
+          #
+          # The default value for each is listed.
+          #          any_map: false
+          #          checked: false
+          #          constructor: ""
+          #          create_factory: true
+          #          create_field_map: false
+          #          create_per_field_to_json: false
+          #          create_to_json: true
+          #          disallow_unrecognized_keys: false
+          #          explicit_to_json: false
+          #          field_rename: none
+          #          generic_argument_factories: false
+          #          ignore_unannotated: false
+          include_if_null: false
+          create_json_keys: true
+        generate_for:
+          - '**/entity/*.dart'
+          - '**/model/*.dart'
+      copy_with_extension_gen:
+        enabled: true
+        options:
+          copy_with_null: false # Default is false. Generate `copyWithNull` functions.
+          skip_fields: true # Default is false. Prevent generation of individual field methods, e.g. `instance.copyWith.id("123")`.
+        generate_for:
+          - '**/entity/*.dart'
+          - '**/model/*.dart'
