@@ -65,6 +65,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
+  extended_text_field:
+    dependency: transitive
+    description:
+      name: extended_text_field
+      sha256: "3996195c117c6beb734026a7bc0ba80d7e4e84e4edd4728caa544d8209ab4d7d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "16.0.2"
+  extended_text_library:
+    dependency: transitive
+    description:
+      name: extended_text_library
+      sha256: "13d99f8a10ead472d5e2cf4770d3d047203fe5054b152e9eb5dc692a71befbba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "12.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -85,10 +109,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: "8986dec4581b4bcd4b6df5d75a2ea0bede3db802f500635d05fa8be298f9467f"
+      sha256: "978be1f602e0695daef8e345a3c597abf72b0c0ca6102fa2665eb549f5406a17"
       url: "https://pub.dev"
     source: hosted
-    version: "10.1.2"
+    version: "10.1.5"
   file_selector_linux:
     dependency: transitive
     description:
@@ -415,6 +439,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
+  json_field_editor:
+    dependency: "direct main"
+    description:
+      name: json_field_editor
+      sha256: "7577afa12b7096f7c7b3727fbc32d489798e14e6c2c1b1a8539882d71f9e1541"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   leak_tracker:
     dependency: transitive
     description:

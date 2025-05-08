@@ -38,18 +38,6 @@ class DocFieldAttachmentViewState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (field.title.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 4.0,
-            ),
-            child: Text(
-              field.title,
-              style: theme.textTheme.titleSmall,
-            ),
-          ),
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           alignment: Alignment.center,

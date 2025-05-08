@@ -25,6 +25,7 @@ class DocFormLocalization {
     if (localizations != null) {
       for (final localization in localizations) {
         _localizationsMap[localization.locale.toLanguageTag()] = localization;
+        _localizationsMap[localization.locale.languageCode] = localization;
       }
     }
     if (locale != null) {

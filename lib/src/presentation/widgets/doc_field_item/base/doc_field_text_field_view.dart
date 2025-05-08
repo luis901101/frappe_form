@@ -50,43 +50,26 @@ abstract class DocFieldTextFieldViewState<SF extends DocFieldTextFieldView>
 
   @override
   Widget buildBody(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (field.title.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 4.0,
-            ),
-            child: Text(
-              field.title,
-              style: theme.textTheme.titleSmall,
-            ),
-          ),
-        CustomTextField(
-          controller: controller,
-          focusNode: controller.focusNode,
-          enabled: !isReadOnly,
-          maxLength: maxLength,
-          maxLines: maxLines,
-          textInputAction:
-              (maxLines != null && maxLines! > 1) ? null : textInputAction,
-          keyboardType: keyboardType,
-          textCapitalization: textCapitalization,
-          inputFormatters: formatDecimals > 0
-              ? [
-                  DecimalTextInputFormatter(
-                      decimals: formatDecimals,
-                      allowSigned: keyboardType?.signed ?? false),
-                ]
-              : null,
-          obscuringCharacter: obscuringCharacter,
-          customButtonDefaultAction:
-              obscureText ? CustomButtonDefaultAction.passwordToggle : null,
-        ),
-      ],
+    return CustomTextField(
+      controller: controller,
+      focusNode: controller.focusNode,
+      enabled: !isReadOnly,
+      maxLength: maxLength,
+      maxLines: maxLines,
+      textInputAction:
+          (maxLines != null && maxLines! > 1) ? null : textInputAction,
+      keyboardType: keyboardType,
+      textCapitalization: textCapitalization,
+      inputFormatters: formatDecimals > 0
+          ? [
+              DecimalTextInputFormatter(
+                  decimals: formatDecimals,
+                  allowSigned: keyboardType?.signed ?? false),
+            ]
+          : null,
+      obscuringCharacter: obscuringCharacter,
+      customButtonDefaultAction:
+          obscureText ? CustomButtonDefaultAction.passwordToggle : null,
     );
   }
 }

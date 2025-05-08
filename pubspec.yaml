@@ -24,6 +24,7 @@ dependencies:
   validators: ^3.0.0
   json_annotation: ^4.9.0
   copy_with_extension: ^6.0.1
+  equatable: ^2.0.7
 
 dependency_overrides:
   lints: ^5.1.1 # Necessary override because frappe_form depends on html_editor_enhanced which depends on lints < 5.0.0

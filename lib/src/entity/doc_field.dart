@@ -43,7 +43,8 @@ class DocField extends DocType {
   final int? unique;
   @JsonKey(name: "depends_on")
   final String? dependsOn;
-  List<DependsOnEval>? _dependsOnEvalList; // Only for cache
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  final List<DependsOnEval> dependsOnEvalList; // Only for cache
   @JsonKey(name: "in_list_view")
   final int? inListView;
   @JsonKey(name: "length")
@@ -111,12 +112,13 @@ class DocField extends DocType {
     this.precision,
     List<DocField>? children,
   })  : children = children ?? [],
-        optionsAsList = options?.split('\n').toList() ?? [];
+        optionsAsList = options?.split('\n').toList() ?? [],
+        dependsOnEvalList = DependsOnEval.fromExpression(dependsOn);
 
   factory DocField.dummy() => DocField();
 
   @override
-  String get title => label ?? super.title;
+  String get title => label ?? '';
 
   bool get isGroupType => type?.isGroup ?? false;
 
@@ -127,10 +129,10 @@ class DocField extends DocType {
   int? get maxLength => (length ?? 0) == 0 ? null : length!;
   int? get precisionDecimals => precision?.asInt;
 
-  List<DependsOnEval> get dependsOnEvalList =>
-      _dependsOnEvalList ??= DependsOnEval.fromExpression(dependsOn);
-
   DateTime? get defaultAsDateTime => DateTime.tryParse('$initial');
+
+  @override
+  List<Object?> get props => [type, name, idx];
 
   factory DocField.fromJson(Map<String, dynamic> json) =>
       _$DocFieldFromJson(json);

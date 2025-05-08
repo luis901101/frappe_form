@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:equatable/equatable.dart';
 import 'package:frappe_form/src/entity/enumerator/doc_type_type.dart';
 import 'package:frappe_form/src/logic/utils/num_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -9,7 +10,7 @@ part 'doc_type.g.dart';
 
 @JsonSerializable()
 @CopyWith()
-class DocType {
+class DocType with EquatableMixin {
   @JsonKey(name: "name")
   final String? name;
   @JsonKey(name: "creation")
@@ -71,6 +72,9 @@ class DocType {
   bool get isRadOnly => readOnly.asBool;
 
   String get title => name ?? '';
+
+  @override
+  List<Object?> get props => [name, idx];
 
   factory DocType.fromJson(Map<String, dynamic> json) =>
       _$DocTypeFromJson(json);

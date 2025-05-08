@@ -11,7 +11,7 @@ class DocFieldGroupController {
       List<int> parentGroupIndexes = [];
 
       // Get the indexes of the parent groups which would be the Tabs fields
-      for (int i = 0; i < fields.length; i++) {
+      for (int i = 0; i < fields.length; ++i) {
         if (fields[i].isParentGroupType) {
           parentGroupIndexes.add(i);
         }
@@ -46,7 +46,7 @@ class DocFieldGroupController {
 
       for (final parentGroup in parentGroups) {
         List<DocField> childGroups = [];
-        for (int i = 0; i < parentGroup.children.length; i++) {
+        for (int i = 0; i < parentGroup.children.length; ++i) {
           final field = parentGroup.children[i];
 
           List<DocField> fieldsOfGroup = extractFieldsOfGroup(
@@ -82,7 +82,12 @@ class DocFieldGroupController {
             ));
           }
 
-          i += _lengthOfGroup(fieldsOfGroup);
+          // Finds the deepest field in the already created child tree groups to
+          // get the correct index in the plain list of fields, so we can continue
+          // adding the rest of the fields in the correct order.
+          final lastField = _deepestField(childGroups.lastOrNull);
+          int indexOfLastField = _indexOfField(lastField, parentGroup.children);
+          i = indexOfLastField > i ? indexOfLastField : i;
         }
         if (childGroups.isNotEmpty) {
           parentGroup.children.clear();
@@ -97,16 +102,34 @@ class DocFieldGroupController {
     return parentGroups;
   }
 
-  int _lengthOfGroup(List<DocField> fields) {
-    int length = 0;
-    for (final field in fields) {
-      if (field.isGroupType) {
-        length += 1 + _lengthOfGroup(field.children);
-      } else {
-        ++length;
+  // int _lengthOfGroup(List<DocField> fields) {
+  //   int length = 0;
+  //   for (final field in fields) {
+  //     if (field.isGroupType) {
+  //       length += 1 + _lengthOfGroup(field.children);
+  //     } else {
+  //       ++length;
+  //     }
+  //   }
+  //   return length;
+  // }
+
+  int _indexOfField(DocField? field, List<DocField> fields) {
+    if (field == null || fields.isEmpty) return -1;
+    for (int i = 0; i < fields.length; ++i) {
+      if (fields[i] == field) {
+        return i;
       }
     }
-    return length;
+    return -1;
+  }
+
+  DocField? _deepestField(DocField? field) {
+    if (field == null) return null;
+    if (field.children.isNotEmpty) {
+      return _deepestField(field.children.last);
+    }
+    return field;
   }
 
   DocField generateGroup({
@@ -142,10 +165,16 @@ class DocFieldGroupController {
 
       return field.copyWith(children: fields);
     }
-    // If field is not a group type, then this it's assume a section break
+    // If field is not a group type, then this is assumed a section break
+    // So we create a Dummy column break to hold the fields inside the section
     return DocField(
       type: FieldType.sectionBreak,
-      children: fields,
+      children: [
+        DocField(
+          type: FieldType.columnBreak,
+          children: fields,
+        )
+      ],
     );
   }
 

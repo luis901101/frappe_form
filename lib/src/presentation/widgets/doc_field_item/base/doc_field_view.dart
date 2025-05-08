@@ -77,6 +77,21 @@ abstract class DocFieldViewState<SF extends DocFieldView> extends State<SF>
 
   Widget buildBody(BuildContext context);
 
+  Widget? buildTitleView(BuildContext context) {
+    if (field.title.isEmpty) return null;
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 8.0,
+        right: 8.0,
+        bottom: 4.0,
+      ),
+      child: Text(
+        field.title,
+        style: theme.textTheme.titleSmall,
+      ),
+    );
+  }
+
   Widget? buildDescriptionView(BuildContext context) {
     if (field.description.isEmpty) return null;
     final inputBorderRadius = (theme.inputDecorationTheme.border
@@ -104,6 +119,7 @@ abstract class DocFieldViewState<SF extends DocFieldView> extends State<SF>
   Widget build(BuildContext context) {
     super.build(context);
     theme = Theme.of(context);
+    final titleView = buildTitleView(context);
     final descriptionView = buildDescriptionView(context);
     return isHidden
         ? const SizedBox.shrink()
@@ -121,6 +137,7 @@ abstract class DocFieldViewState<SF extends DocFieldView> extends State<SF>
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        if (titleView != null) titleView,
                         buildBody(context),
                         if (descriptionView != null) descriptionView,
                       ],

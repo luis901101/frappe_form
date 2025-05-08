@@ -34,11 +34,12 @@ dependencies:
   frappe_form:
     path: ../
   image_picker: ^1.1.2
-  file_picker: ^10.1.2
+  file_picker: ^10.1.5
   crypto: ^3.0.6
+  json_field_editor: ^1.2.1
 
 dependency_overrides:
-  file_picker: ^10.1.2 # Necessary override because frappe_form depends on html_editor_enhanced which depends on file_picker < 10.0.0
+  file_picker: ^10.1.5 # Necessary override because frappe_form depends on html_editor_enhanced which depends on file_picker < 10.0.0
   lints: ^5.1.1 # Necessary override because frappe_form depends on html_editor_enhanced which depends on lints < 5.0.0
 
 dev_dependencies:

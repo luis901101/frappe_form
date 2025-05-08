@@ -16,6 +16,9 @@ class DocFieldColumnView extends DocFieldView {
 
 class DocFieldColumnViewState extends DocFieldViewState<DocFieldColumnView> {
   @override
+  Widget? buildTitleView(BuildContext context) => null;
+
+  @override
   Widget buildBody(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,

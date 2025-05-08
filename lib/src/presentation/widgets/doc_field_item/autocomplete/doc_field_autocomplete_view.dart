@@ -78,18 +78,6 @@ class DocFieldAutocompleteViewState<SF extends DocFieldAutocompleteView>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (field.title.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 4.0,
-            ),
-            child: Text(
-              field.title,
-              style: theme.textTheme.titleSmall,
-            ),
-          ),
         Autocomplete<String>(
           initialValue: TextEditingValue(text: controller.value ?? ''),
           optionsBuilder: (TextEditingValue textEditingValue) =>

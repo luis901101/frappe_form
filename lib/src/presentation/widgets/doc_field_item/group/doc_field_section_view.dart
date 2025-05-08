@@ -22,6 +22,9 @@ class DocFieldSectionViewState extends DocFieldViewState<DocFieldSectionView> {
   final double itemSpacing = 8.0;
 
   @override
+  Widget? buildTitleView(BuildContext context) => null;
+
+  @override
   Widget buildBody(BuildContext context) {
     double borderRadius = 0;
     if (theme.inputDecorationTheme.border is OutlineInputBorder) {

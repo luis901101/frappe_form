@@ -7,6 +7,7 @@ import 'package:example/doc_form_samples.dart';
 import 'package:frappe_form/frappe_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:json_field_editor/json_field_editor.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,8 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
     (name: 'Spanish', value: Locale('es', 'ES')),
     (name: 'French', value: Locale('fr', 'FR')),
   ];
-  final List<({String name, int value})> forms = [
-    (name: 'Generic', value: 0),
+  final List<({String name, String value})> forms = [
+    (name: 'Sample Structure', value: DocFormSamples.sampleStructure),
+    (name: 'Taste Tester', value: DocFormSamples.tasteTester),
   ];
   final List<({String name, InputDecorationTheme value})>
       inputDecorationThemes = [
@@ -101,12 +103,27 @@ class _MyHomePageState extends State<MyHomePage> {
       )
     ),
   ];
+
+  static bool isValidJson(String? jsonString) {
+    if (jsonString == null) {
+      return false;
+    }
+    try {
+      json.decode(jsonString);
+      return true;
+    } on FormatException catch (_) {
+      return false;
+    }
+  }
+
   Locale? selectedLocale;
-  int selectedForm = 0;
+  String selectedForm = DocFormSamples.sampleStructure;
   InputDecorationTheme? selectedInputDecorationTheme = InputDecorationTheme();
   final extraLocalizations = [DocFormFrLocalization()];
+  ThemeData theme = ThemeData();
   @override
   Widget build(BuildContext context) {
+    theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -118,12 +135,12 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DropdownButtonFormField<int>(
+              DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
                       label: Text('Select a Form sample')),
                   value: selectedForm,
                   items: forms
-                      .map((e) => DropdownMenuItem<int>(
+                      .map((e) => DropdownMenuItem<String>(
                             value: e.value,
                             child: Text(e.name),
                           ))
@@ -133,6 +150,161 @@ class _MyHomePageState extends State<MyHomePage> {
                       selectedForm = value;
                     }
                   }),
+              const SizedBox(height: 8.0),
+              TextButton.icon(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        String? nameError;
+                        String? jsonError;
+                        final nameController = JsonTextFieldController();
+                        final jsonController = JsonTextFieldController();
+                        return Dialog(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: StatefulBuilder(
+                                builder: (context, dialogSetState) => Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Add a Form from JSON',
+                                          textAlign: TextAlign.center,
+                                          style: theme.textTheme.titleLarge,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        TextField(
+                                          controller: nameController,
+                                          decoration: InputDecoration(
+                                            labelText: 'Form Name',
+                                            errorText: nameError,
+                                            contentPadding: EdgeInsets.only(
+                                                left: 16, top: 12, bottom: 12),
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(28)),
+                                            ),
+                                            filled: true,
+                                          ),
+                                        ),
+                                        ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                              maxHeight: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.6),
+                                          child: SingleChildScrollView(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 16),
+                                              child: JsonField(
+                                                controller: jsonController,
+                                                isFormatting: true,
+                                                showErrorMessage: true,
+                                                maxLines: null,
+                                                decoration: InputDecoration(
+                                                  labelText: 'Form JSON',
+                                                  errorText: jsonError,
+                                                  contentPadding:
+                                                      EdgeInsets.only(
+                                                          left: 16,
+                                                          top: 12,
+                                                          bottom: 12),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                28)),
+                                                  ),
+                                                  filled: true,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: () => jsonController
+                                                    .formatJson(sortJson: true),
+                                                child:
+                                                    const Text('Format JSON'),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  nameError = jsonError = null;
+                                                  if (nameController
+                                                      .text.isEmpty) {
+                                                    nameError =
+                                                        'Name is required';
+                                                  }
+                                                  if (nameError == null &&
+                                                      forms.any((item) =>
+                                                          item.name ==
+                                                          nameController
+                                                              .text)) {
+                                                    nameError =
+                                                        'A Form with this name already exists';
+                                                  }
+                                                  if (jsonController
+                                                      .text.isEmpty) {
+                                                    jsonError =
+                                                        'JSON is required';
+                                                  }
+                                                  if (jsonError == null &&
+                                                      !isValidJson(
+                                                          jsonController
+                                                              .text)) {
+                                                    jsonError = 'Invalid JSON';
+                                                  }
+                                                  if (jsonError == null &&
+                                                      forms.any((item) =>
+                                                          item.value ==
+                                                          jsonController
+                                                              .text)) {
+                                                    jsonError =
+                                                        'A Form with this JSON already exists';
+                                                  }
+                                                  if (nameError != null ||
+                                                      jsonError != null) {
+                                                    dialogSetState(() {});
+                                                    return;
+                                                  }
+                                                  forms.add((
+                                                    name: nameController.text,
+                                                    value: jsonController.text
+                                                  ));
+                                                  selectedForm =
+                                                      jsonController.text;
+                                                  setState(() {});
+                                                  Navigator.pop(context);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      theme.colorScheme.primary,
+                                                  foregroundColor: theme
+                                                      .colorScheme.onPrimary,
+                                                ),
+                                                child: const Text('Add'),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )),
+                          ),
+                        );
+                      });
+                },
+                icon: const Icon(Icons.add),
+                label: const Text('Add a Form from JSON'),
+              ),
               const SizedBox(height: 16.0),
               DropdownButtonFormField<Locale?>(
                   decoration: const InputDecoration(
@@ -189,9 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  DocForm get form => DocForm.fromJsonString(switch (selectedForm) {
-        0 || _ => DocFormSamples.sampleGeneric,
-      });
+  DocForm get form => DocForm.fromJsonString(selectedForm);
 }
 
 class DocFormPage extends StatefulWidget {
@@ -211,6 +381,7 @@ class DocFormPage extends StatefulWidget {
 
 class DocFormPageState extends State<DocFormPage> {
   bool loading = true;
+  ThemeData theme = ThemeData();
 
   @override
   void initState() {
@@ -221,6 +392,7 @@ class DocFormPageState extends State<DocFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    theme = Theme.of(context);
     return DocFormView(
       key: ValueKey(loading),
       form: widget.form,
@@ -238,13 +410,59 @@ class DocFormPageState extends State<DocFormPage> {
 
   void onSubmit(Map<String, dynamic> formResponse) async {
     Navigator.pop(context);
+    String json = jsonEncode(formResponse);
     var prettyString = const JsonEncoder.withIndent('  ').convert(formResponse);
-
     debugPrint('''
       ========================================================================
       $prettyString
       ========================================================================
       ''');
+    showDialog(
+        context: context,
+        builder: (context) => Dialog(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Form Response',
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.7),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: JsonField(
+                            controller: JsonTextFieldController()..text = json,
+                            isFormatting: true,
+                            showErrorMessage: true,
+                            doInitFormatting: true,
+                            readOnly: true,
+                            showCursor: true,
+                            enableInteractiveSelection: true,
+                            maxLines: null,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                  left: 16, top: 12, bottom: 12),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(28)),
+                              ),
+                              filled: true,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ));
   }
 }
 

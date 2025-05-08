@@ -38,41 +38,24 @@ class DocFieldTextEditorViewState
         ? Border.all(color: borderColor)
         : Border(bottom: BorderSide(color: borderColor));
     final fillColor = theme.inputDecorationTheme.fillColor;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (field.title.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 4.0,
-            ),
-            child: Text(
-              field.title,
-              style: theme.textTheme.titleSmall,
-            ),
-          ),
-        HtmlEditor(
-          controller: htmlController, //required
-          callbacks: Callbacks(onChangeContent: (html) {
-            controller.text = html ?? '';
-          }),
-          htmlEditorOptions: HtmlEditorOptions(
-            hint: '',
-            initialText: controller.text,
-            characterLimit: maxLength,
-            disabled: isReadOnly,
-          ),
-          otherOptions: OtherOptions(
-              height: 400,
-              decoration: BoxDecoration(
-                borderRadius: borderRadius,
-                border: border,
-                color: fillColor,
-              )),
-        )
-      ],
+    return HtmlEditor(
+      controller: htmlController, //required
+      callbacks: Callbacks(onChangeContent: (html) {
+        controller.text = html ?? '';
+      }),
+      htmlEditorOptions: HtmlEditorOptions(
+        hint: '',
+        initialText: controller.text,
+        characterLimit: maxLength,
+        disabled: isReadOnly,
+      ),
+      otherOptions: OtherOptions(
+          height: 400,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            border: border,
+            color: fillColor,
+          )),
     );
   }
 }

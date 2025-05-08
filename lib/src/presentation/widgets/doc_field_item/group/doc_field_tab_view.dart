@@ -21,6 +21,9 @@ class DocFieldTabView extends DocFieldView implements PreferredSizeWidget {
 
 class DocFieldTabItemViewState extends DocFieldViewState<DocFieldTabView> {
   @override
+  Widget? buildTitleView(BuildContext context) => null;
+
+  @override
   Widget buildBody(BuildContext context) {
     return Tab(
       text: field.title,

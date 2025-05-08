@@ -64,55 +64,38 @@ class DocFieldPhoneViewState<SF extends DocFieldPhoneView>
 
   @override
   Widget buildBody(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (field.title.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-              bottom: 4.0,
-            ),
-            child: Text(
-              field.title,
-              style: theme.textTheme.titleSmall,
-            ),
-          ),
-        CustomIntlPhoneField(
-          key: ValueKey('phoneController-${controller.hasError}'),
-          // controller: phoneController,
-          initialValue: initialPhoneNumber,
-          initialCountryCode: phoneCountry?.code,
-          textInputAction: TextInputAction.next,
-          focusNode: controller.focusNode,
-          onCountryChanged: (country) => phoneCountry = country,
-          validator: (phoneNumber) async {
-            isValidPhoneNumber = (phoneNumber?.number.isEmpty ?? true) ||
-                ValidationUtils.isPhoneNumberValid(
-                    number: phoneNumber?.number, country: phoneCountry);
-            return isValidPhoneNumber
-                ? null
-                : DocFormLocalization
-                    .instance.localization.exceptionInvalidPhoneNumber;
-          },
-          onSubmitted: (term) {
-            controller.focusNode?.unfocus();
-          },
-          onChanged: (phone) {
-            if (controller.hasError) {
-              controller.clear();
-              setState(() {});
-            }
-            phoneNumber = phone.completeNumber;
-            controller.text = phoneNumber!;
-          },
-          decoration: InputDecoration(
-            hintText: DocFormLocalization.instance.localization.textPhone,
-            errorText: controller.error,
-          ),
-        ),
-      ],
+    return CustomIntlPhoneField(
+      key: ValueKey('phoneController-${controller.hasError}'),
+      // controller: phoneController,
+      initialValue: initialPhoneNumber,
+      initialCountryCode: phoneCountry?.code,
+      textInputAction: TextInputAction.next,
+      focusNode: controller.focusNode,
+      onCountryChanged: (country) => phoneCountry = country,
+      validator: (phoneNumber) async {
+        isValidPhoneNumber = (phoneNumber?.number.isEmpty ?? true) ||
+            ValidationUtils.isPhoneNumberValid(
+                number: phoneNumber?.number, country: phoneCountry);
+        return isValidPhoneNumber
+            ? null
+            : DocFormLocalization
+                .instance.localization.exceptionInvalidPhoneNumber;
+      },
+      onSubmitted: (term) {
+        controller.focusNode?.unfocus();
+      },
+      onChanged: (phone) {
+        if (controller.hasError) {
+          controller.clear();
+          setState(() {});
+        }
+        phoneNumber = phone.completeNumber;
+        controller.text = phoneNumber!;
+      },
+      decoration: InputDecoration(
+        hintText: DocFormLocalization.instance.localization.textPhone,
+        errorText: controller.error,
+      ),
     );
   }
 }

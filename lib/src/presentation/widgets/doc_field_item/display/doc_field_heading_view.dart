@@ -15,6 +15,9 @@ class DocFieldHeadingView extends DocFieldView {
 
 class DocFieldHeadingViewState extends DocFieldViewState<DocFieldHeadingView> {
   @override
+  Widget? buildTitleView(BuildContext context) => null;
+
+  @override
   Widget buildBody(BuildContext context) {
     return Text(
       field.title,
