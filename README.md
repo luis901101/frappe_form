@@ -91,8 +91,4 @@ DocFormView(
 3. Check the example project which shows all the features in action.
 
 ## Demo
-<div>
- <a href="https://raw.githubusercontent.com/luis901101/frappe_form/main/example/doc/gif/demo.gif">
-<img src="https://raw.githubusercontent.com/luis901101/frappe_form/main/example/doc/gif/demo.gif" width="230"/>
-</a>
-</div>
+### [Try the demo app here](https://luis901101.github.io/frappe_form)

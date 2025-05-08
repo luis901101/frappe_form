@@ -17,6 +17,13 @@ check-publish:
 publish:
 	dart pub publish
 
+generate-web:
+	flutter clean
+	cd example && flutter clean
+	flutter pub get
+	cd example && flutter build web --release --base-href "/frappe_form/"
+	cd example && cp -r build/web/* ../docs
+
 .PHONY: generate-exports
 generate-exports:
 	@./generate-exports
