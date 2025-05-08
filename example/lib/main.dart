@@ -409,7 +409,6 @@ class DocFormPageState extends State<DocFormPage> {
   }
 
   void onSubmit(Map<String, dynamic> formResponse) async {
-    Navigator.pop(context);
     String json = jsonEncode(formResponse);
     var prettyString = const JsonEncoder.withIndent('  ').convert(formResponse);
     debugPrint('''
