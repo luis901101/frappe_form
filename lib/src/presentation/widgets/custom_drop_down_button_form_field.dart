@@ -156,7 +156,7 @@ class _CustomDropDownButtonFormFieldState<T>
           ? null
           : (widget.onTap ?? () => widget.focusNode?.requestFocus()),
       elevation: widget.elevation ?? 8,
-      style: widget.style,
+      style: widget.style ?? Theme.of(context).textTheme.bodyLarge,
       icon:
           widget.icon ??
           (showSuffixButtons

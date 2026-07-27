@@ -12,6 +12,27 @@ Types of changes
 ## 0.10.0
 ### Added
 - Added support for the field `placeholder` property, rendered as the input hint text _(on `Attach` and `Attach Image` fields, when the placeholder is an image url it is rendered as a preview image while no file is attached)_.
+- Added support for `===`, `!==`, `%`, the unary `!`, `-` and `+` operators and the `true`, `false` and `null` literals on **Mandatory Depends On (JS)**, **Read Only Depends On (JS)** and **Display Depends On (JS)** expressions in fields.
+- Added support for the plain non `eval:` form of the `depends_on` property _(like `depends_on: "my_check"`)_.
+- Added a standalone JS expression analyzer _(`JsExpression`)_ that can be reused outside the depends-on properties.
+
+### Changed
+- **Breaking:** Depends-on expressions are now parsed into a syntax tree instead of splitting the text on operator symbols. `DocFieldDependsOnBundle` no longer exposes the `and`, `or`, `sum`, `subtract`, `multiply` and `divide` children, its generative constructor, `withCondition` nor `withArithmetic`.
+- **Breaking:** The JS expression logic moved to `src/js_expression` with its own naming, so `DocFieldDependsOnOperator` is now `JsComparisonOperator`, `DocFieldDependsOnCondition` is `JsLogicalOperator` and `DocFieldDependsOnArithmetic` is `JsArithmeticOperator`.
+
+### Fixed
+- Fixed depends-on expressions ignoring operator precedence and grouping parentheses, which also dropped referenced fields from the expression.
+- Fixed depends-on expressions losing the arithmetic part when mixed with conditions, like `doc.a + doc.b >= 3 && doc.c == 1`.
+- Fixed depends-on expressions breaking on operator symbols inside string literals, like `doc.some_date == "2025-01-01"`.
+- Fixed depends-on expressions only supporting the `doc.field <operator> literal` shape, so `5 > doc.qty` and `doc.qty > doc.min_qty` were misinterpreted.
+- Fixed untouched fields not being read as their Frappe default, so `doc.some_check == 0` did not hold for an untouched checkbox.
+- Fixed bare field expressions like `eval:doc.some_field` being always satisfied regardless of the field value.
+- Fixed relational operators returning `false` instead of comparing as strings when the operands are not numeric.
+- Fixed a field referenced more than once registering its change listener more than once.
+- Fixed the listeners of a replaced depends-on expression not being detached.
+
+### Removed
+- **Breaking:** Removed the unused `DocFieldDependsOnBehavior` enum.
 
 ## 0.9.2
 ### Fixed

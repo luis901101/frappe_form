@@ -63,6 +63,69 @@ So far this package supports the following [Field Types](https://docs.frappe.io/
 7. Default value
 8. Placeholder _(rendered as the input hint text; on `Attach` and `Attach Image` fields, when the placeholder is an image url it is rendered as a preview image while no file is attached)_
 
+### Depends On expressions
+The three **Depends On (JS)** properties are tokenized and parsed into a syntax tree, then evaluated against the current form values. Operator precedence and grouping parentheses work as they do in JavaScript, and the expression is re-evaluated automatically whenever any of the fields it references changes.
+
+#### Supported syntax
+
+| | |
+| --- | --- |
+| Field references | `doc.field_name` or just `field_name` |
+| Literals | numbers, single or double quoted strings, `true`, `false`, `null` |
+| Logical | `&&`, `\|\|`, `!` |
+| Comparison | `==`, `!=`, `===`, `!==`, `>`, `<`, `>=`, `<=` |
+| Arithmetic | `+`, `-`, `*`, `/`, `%` and the unary `-`/`+` |
+| Grouping | `( ... )` |
+
+```
+eval:(doc.check_1 == 1 || doc.check_2 == 1) && doc.none_of_the_above == 0
+eval:doc.check_1 + doc.check_2 + doc.check_3 >= 2
+eval:doc.select == 'Option 3' && doc.qty > doc.min_qty
+eval:doc.some_date == '2025-01-01' && doc.discount > -5
+```
+
+Both operands of any operator can be a literal or a field reference, so `5 > doc.qty` and `doc.qty > doc.min_qty` work just as well as `doc.qty > 5`. String literals are read as a whole, so operator symbols inside them _(the dashes of a date, the slash of a path)_ are never mistaken for operators.
+
+Besides the `eval:` form, the plain field name form is also supported, where `depends_on: "my_check"` is satisfied whenever that field holds a truthy value.
+
+Anything outside this subset _(function calls like `in_list(...)`, array literals, assignments, …)_ raises a `JsExpressionException`, and the rule is ignored instead of being silently misinterpreted.
+
+#### How values are read
+
+A field the user has not filled yet is read as the Frappe default of its type, so a rule holds from the start without having to touch the field first:
+
+| Field type | Unset value |
+| --- | --- |
+| `Check`, `Int`, `Float`, `Currency`, `Percent`, `Rating`, `Duration` | `0` |
+| `Data`, `Small Text`, `Long Text`, `Text`, `Select`, `Link`, `Password`, `Phone` and the other text based ones | `''` |
+| Anything else | `null` |
+
+`Date`, `Time` and `Datetime` fields compare against the same string Frappe stores _(`'2025-01-01'`, `'10:30:00'`)_, and a `Geolocation` field against its GeoJSON string.
+
+Values are compared with JavaScript semantics _(`0`, `''`, `null` and `NaN` are falsy, `==` coerces while `===` does not)_, with two deliberate differences that fit form data better:
+
+- Relational operators compare numerically whenever **both** operands are numeric, even when both are strings. JS reads `'10' > '9'` as `false`, here it is `true`, because text based inputs expose numeric values as strings.
+- `+` sums whenever both operands are numeric and only concatenates otherwise, so `'1' + '1'` is `2` and not `'11'`.
+
+#### Using the analyzer on its own
+
+The analyzer lives in `src/js_expression` and knows nothing about Frappe, so it can be reused by binding the identifiers to whatever holds your values:
+
+```dart
+final expression = JsExpression.parse(
+  "(check_1 == 1 || check_2 == 1) && total > 10",
+  resolveVariable: JsConstantVariable.resolverOf({
+    'check_1': 1,
+    'check_2': 0,
+    'total': 42,
+  }),
+);
+expression.evaluateAsBool(); // true
+expression.variables; // The variables it reads, to watch them for changes
+```
+
+Use `JsExpression.tryParse` to get `null` instead of an exception on a malformed expression. To read from something other than a map, implement `JsVariable` with your own `name` and `value`, and pass a `JsVariableResolver` that returns it. That is exactly what `DocFieldVariable` does for the form fields, and `DocFieldDependsOnBundle` is just the thin Frappe layer on top.
+
 
 ## How to use
 Just add a `DocFormView` widget to your widget tree and you will have your Frappe Form UI.
