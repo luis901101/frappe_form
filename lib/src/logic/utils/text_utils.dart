@@ -12,6 +12,8 @@ extension StringExtension on String {
   bool get asBool => bool.tryParse(this) ?? false;
   bool containsIgnoringCase(String text) =>
       toLowerCase().contains(text.toLowerCase());
+  bool isUrl({bool requireProtocol = true}) =>
+      validators.isURL(this, requireProtocol: requireProtocol);
 }
 
 extension StringNullExtension on String? {

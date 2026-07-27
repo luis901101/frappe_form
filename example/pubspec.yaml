@@ -33,12 +33,22 @@ dependencies:
     sdk: flutter
   frappe_form:
     path: ../
-  image_picker: ^1.2.0
-  file_picker: ^10.3.3
-  crypto: ^3.0.6
+  image_picker: ^1.2.3
+  file_picker: ^11.0.2
+  crypto: ^3.0.7
   json_field_editor: ^1.2.1
 
-#dependency_overrides:
+dependency_overrides:
+  extended_text_field: ^17.0.0 # Necessary because json_field_editor uses an old version of extended_text_field which causes issues with Flutter 3.44
+  html_editor_enhanced: #^2.7.1 # Necessary override due to file_picker dependency doing breaking change to not use FilePicker.platform singleton, and other improvements: https://github.com/tneotia/html-editor-enhanced/pull/601
+    git:
+      url: https://github.com/Abdulrahman-Al-Sheikh/html-editor-enhanced
+      ref: 46596a27db47471d6881a76ae8773115e982699e
+  flutter_keyboard_visibility: # Necessary override due to compileSdkVersion < 36. This dependency is used by flutter_inappwebview which is used by oauth_webauth, these are depedencies that are not crucial for this project, so mark it for removal. Check here: https://github.com/MisterJimson/flutter_keyboard_visibility/pull/173
+    git:
+      url: https://github.com/Crucialjun/flutter_keyboard_visibility.git
+      path: flutter_keyboard_visibility
+      ref: 63da8c50a5be71a2c06e988cd1993a89b9873a1c
 #  file_picker: ^10.3.2 # Necessary override because frappe_form depends on html_editor_enhanced which depends on file_picker < 10.0.0
 
 dev_dependencies:

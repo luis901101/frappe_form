@@ -72,6 +72,15 @@ class DocField extends DocType {
   final String? precision;
   @JsonKey(name: 'child_table')
   final Object? childTable;
+
+  /// Hint to show while the field has no value.
+  ///
+  /// Most field types render it as the input hint text. Attachment fields
+  /// interpret it differently: when it is a valid url _(protocol required)_ it
+  /// is rendered as a preview image while no file is attached, otherwise it is
+  /// used as the semantic label of the attached image.
+  @JsonKey(name: 'placeholder')
+  final String? placeholder;
   @JsonKey(name: 'render_rules')
   final String? renderRules;
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -132,6 +141,7 @@ class DocField extends DocType {
     this.initial,
     this.precision,
     this.childTable,
+    this.placeholder,
     this.renderRules,
     List<DocField>? children,
   }) : type = type ?? FieldType.valueOf(fieldType) ?? FieldType.unknown,

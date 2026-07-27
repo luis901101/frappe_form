@@ -90,6 +90,7 @@ class DocFieldSelectViewState<SF extends DocFieldSelectView>
     disabled: isReadOnly,
     onChanged: onSelectedValueChanged,
     nameResolver: valueNameResolver,
+    inputDecoration: InputDecoration(hintText: placeholder),
   );
 
   @override

@@ -11,6 +11,23 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(':app')
+
+    // Some plugins (e.g. flutter_keyboard_visibility 6.0.0, pulled in by
+    // html_editor_enhanced) still hardcode an old compileSdkVersion, which fails
+    // the AAR metadata check against modern AndroidX dependencies. Force every
+    // Android subproject to compile against the same SDK as :app.
+    if (!project.state.executed) {
+        project.afterEvaluate {
+            if (project.hasProperty('android')) {
+                project.android {
+                    compileSdk = 36
+                    if (namespace == null) {
+                        namespace = project.group.toString()
+                    }
+                }
+            }
+        }
+    }
 }
 
 tasks.register("clean", Delete) {

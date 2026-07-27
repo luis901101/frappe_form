@@ -75,6 +75,7 @@ abstract class DocFieldTextFieldViewState<SF extends DocFieldTextFieldView>
       customButtonDefaultAction: obscureText
           ? CustomButtonDefaultAction.passwordToggle
           : null,
+      decoration: InputDecoration(hintText: placeholder),
     );
   }
 }

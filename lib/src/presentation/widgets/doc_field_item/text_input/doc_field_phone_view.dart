@@ -99,7 +99,8 @@ class DocFieldPhoneViewState<SF extends DocFieldPhoneView>
         controller.text = phone.toFrappePhone;
       },
       decoration: InputDecoration(
-        hintText: DocFormLocalization.instance.localization.textPhone,
+        hintText:
+            placeholder ?? DocFormLocalization.instance.localization.textPhone,
         errorText: controller.error,
       ),
     );

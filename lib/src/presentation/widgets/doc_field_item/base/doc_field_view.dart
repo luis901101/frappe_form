@@ -65,6 +65,8 @@ abstract class DocFieldViewState<SF extends DocFieldView> extends State<SF>
 
   bool get isHidden => field.isHidden;
 
+  String? get placeholder => field.placeholder;
+
   bool get handleControllerErrorManually => true;
 
   @override

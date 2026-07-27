@@ -1,6 +1,6 @@
 name: frappe_form
 description: "A library to render Frappe DocForm and generate a response"
-version: 0.9.2
+version: 0.10.0
 repository: https://github.com/luis901101/frappe_form
 issue_tracker: https://github.com/luis901101/frappe_form/issues
 topics:
@@ -32,9 +32,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  build_runner: ^2.10.4 #flutter packages pub run build_runner build
-  json_serializable: ^6.11.3
-  adeptgenerator: ^13.1.0
+  build_runner: ^2.15.1 #flutter packages pub run build_runner build
+  json_serializable: ^6.14.0
+  adeptgenerator: ^14.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

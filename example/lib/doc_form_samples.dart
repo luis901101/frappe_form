@@ -123,17 +123,20 @@ class DocFormSamples {
         "fieldtype": "Data",
         "in_list_view": 1,
         "label": "Data",
+        "placeholder": "Enter some name here",
         "reqd": 1
       },
       {
         "fieldname": "int",
         "fieldtype": "Int",
+        "placeholder": "Enter some integer",
         "label": "Int"
       },
       {
         "fieldname": "float",
         "fieldtype": "Float",
         "label": "Float",
+        "placeholder": "Enter some float",
         "precision": "3"
       },
       {
@@ -247,10 +250,11 @@ class DocFormSamples {
         "fieldtype": "Section Break"
       },
       {
-        "description": "Start typing \"Autocomplete\"",
+        "description": "Select one of the autocomplete values",
         "fieldname": "autocomplete",
         "fieldtype": "Autocomplete",
         "label": "Autocomplete",
+        "placeholder": "Start typing \"Autocomplete\"",
         "options": "Autocomplete 1\nAutocomplete 2\nAutocomplete 3"
       },
       {
@@ -258,6 +262,7 @@ class DocFormSamples {
         "fieldname": "select",
         "fieldtype": "Select",
         "label": "Select",
+        "placeholder": "Tap to select some value",
         "options": "\nOption 1\nOption 2\nOption 3"
       },
       {
@@ -290,11 +295,13 @@ class DocFormSamples {
       {
         "fieldname": "attach",
         "fieldtype": "Attach",
+        "placeholder": "https://images.unsplash.com/photo-1784908927302-4e9c0128e113?q=80&w=1750&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Attach"
       },
       {
         "fieldname": "attach_image",
         "fieldtype": "Attach Image",
+        "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Attach image"
       },
       {
@@ -413,34 +420,40 @@ class DocFormSamples {
       {
         "fieldname": "photo_1",
         "fieldtype": "Attach Image",
+        "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Photo 1",
         "reqd": 1
       },
       {
         "fieldname": "photo_2",
         "fieldtype": "Attach",
+        "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Photo 2"
       },
       {
         "fieldname": "photo_3",
         "fieldtype": "Attach",
+        "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Photo 3"
       },
       {
         "fieldname": "video_1",
         "fieldtype": "Attach",
+        "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Video 1",
         "render_rules": "{\n    \"type\": \"VIDEO\", \n    \"maxDuration\": 60000\n}"
       },
       {
         "fieldname": "video_2",
         "fieldtype": "Attach",
+        "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Video 2",
         "render_rules": "{\n    \"type\": \"VIDEO\", \n    \"maxDuration\": 60000\n}"
       },
       {
         "fieldname": "video_3",
         "fieldtype": "Attach",
+        "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
         "label": "Video 3",
         "render_rules": "{\n    \"type\": \"VIDEO\", \n    \"maxDuration\": 60000\n}"
       },
@@ -515,6 +528,7 @@ class DocFormSamples {
             {
               "fieldname": "photo",
               "fieldtype": "Attach Image",
+              "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
               "label": "Photo"
             }
           ],
@@ -558,11 +572,13 @@ class DocFormSamples {
             {
               "fieldname": "photo",
               "fieldtype": "Attach Image",
+              "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
               "label": "Photo"
             },
             {
               "fieldname": "video",
               "fieldtype": "Attach",
+              "placeholder": "https://images.unsplash.com/photo-1777400589332-fbaccdfc8500?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0",
               "label": "Video",
               "options": "{\n    \"type\": \"VIDEO\", \n    \"maxDuration\": 60000\n}",
               "render_rules": "{\n    \"type\": \"VIDEO\", \n    \"maxDuration\": 60000\n}"

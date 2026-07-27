@@ -98,6 +98,22 @@ class DocFieldAutocompleteViewState<SF extends DocFieldAutocompleteView>
                       value.containsIgnoringCase(textEditingValue.text),
                 ),
           onSelected: (String value) => controller.value = value,
+          fieldViewBuilder:
+              (
+                BuildContext context,
+                TextEditingController textEditingController,
+                FocusNode focusNode,
+                VoidCallback onFieldSubmitted,
+              ) => TextFormField(
+                controller: textEditingController,
+                focusNode: focusNode,
+                maxLength: maxLength,
+                enabled: !isReadOnly,
+                onFieldSubmitted: (String value) {
+                  onFieldSubmitted();
+                },
+                decoration: InputDecoration(hintText: placeholder),
+              ),
         ),
         if (isOpen) ...[
           const SizedBox(height: 8.0),

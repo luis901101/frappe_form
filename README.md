@@ -61,6 +61,7 @@ So far this package supports the following [Field Types](https://docs.frappe.io/
 5. Read only fields
 6. Description
 7. Default value
+8. Placeholder _(rendered as the input hint text; on `Attach` and `Attach Image` fields, when the placeholder is an image url it is rendered as a preview image while no file is attached)_
 
 
 ## How to use

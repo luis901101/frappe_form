@@ -53,6 +53,7 @@ extension $DocFieldCopyWithExtension on DocField {
     Object? initial,
     String? precision,
     Object? childTable,
+    String? placeholder,
     String? renderRules,
     List<DocField>? children,
   }) {
@@ -101,6 +102,7 @@ extension $DocFieldCopyWithExtension on DocField {
       initial: initial ?? this.initial,
       precision: precision ?? this.precision,
       childTable: childTable ?? this.childTable,
+      placeholder: placeholder ?? this.placeholder,
       renderRules: renderRules ?? this.renderRules,
       children:
           ((children?.isNotEmpty ?? false) ? children : null) ?? this.children,
@@ -165,6 +167,7 @@ DocField _$DocFieldFromJson(Map<String, dynamic> json) => DocField(
   initial: json['default'],
   precision: json['precision'] as String?,
   childTable: json['child_table'],
+  placeholder: json['placeholder'] as String?,
   renderRules: json['render_rules'] as String?,
 );
 
@@ -213,6 +216,7 @@ Map<String, dynamic> _$DocFieldToJson(DocField instance) => <String, dynamic>{
   'default': ?instance.initial,
   'precision': ?instance.precision,
   'child_table': ?instance.childTable,
+  'placeholder': ?instance.placeholder,
   'render_rules': ?instance.renderRules,
 };
 

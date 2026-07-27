@@ -47,7 +47,7 @@ class DocFieldTextEditorViewState<SF extends DocFieldTextEditorView>
         },
       ),
       htmlEditorOptions: HtmlEditorOptions(
-        hint: '',
+        hint: placeholder ?? '',
         initialText: controller.text,
         characterLimit: maxLength,
         disabled: isReadOnly,

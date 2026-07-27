@@ -32,9 +32,21 @@ class DocFieldAttachmentViewState<SF extends DocFieldAttachmentView>
   Attachment? get value => controller.value;
   set value(Attachment? value) => controller.value = value;
 
+  Widget buildIcon(IconData icon) =>
+      Icon(icon, color: theme.disabledColor, size: 96);
+
+  Widget onImageError(
+    BuildContext context,
+    Object error,
+    StackTrace? stackTrace,
+  ) => buildIcon(Icons.broken_image);
+
   @override
   Widget buildBody(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final showValue = value?.isImage == true && value?.hasSource == true;
+    final isPlaceholderUrl = placeholder?.isUrl() ?? false;
+    final showPlaceholder = value == null && isPlaceholderUrl;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,25 +56,39 @@ class DocFieldAttachmentViewState<SF extends DocFieldAttachmentView>
           child: ClipRect(
             clipBehavior: Clip.hardEdge,
             child: SizedBox(
-              height: value == null ? 0 : null,
+              height: value == null && !showPlaceholder ? 0 : null,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Center(
-                  child:
-                      ((value?.isImage ?? false) && (value?.hasSource ?? false))
+                  child: showValue || showPlaceholder
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(16),
                           clipBehavior: Clip.hardEdge,
-                          child: !kIsWeb && value!.path.isNotEmpty
-                              ? Image.file(File(value?.path ?? ''))
-                              : Image.network(value?.url ?? value?.path ?? ''),
+                          child: showValue
+                              ? (!kIsWeb && value!.path.isNotEmpty
+                                    ? Image.file(
+                                        File(value?.path ?? ''),
+                                        semanticLabel: !isPlaceholderUrl
+                                            ? placeholder
+                                            : null,
+                                        errorBuilder: onImageError,
+                                      )
+                                    : Image.network(
+                                        value?.url ?? value?.path ?? '',
+                                        semanticLabel: !isPlaceholderUrl
+                                            ? placeholder
+                                            : null,
+                                        errorBuilder: onImageError,
+                                      ))
+                              : Image.network(
+                                  placeholder ?? '',
+                                  errorBuilder: onImageError,
+                                ),
                         )
-                      : Icon(
+                      : buildIcon(
                           (value?.mediaType?.endsWith('jpeg') ?? false)
                               ? Icons.image
                               : Icons.file_copy,
-                          color: theme.disabledColor,
-                          size: 96,
                         ),
                 ),
               ),
