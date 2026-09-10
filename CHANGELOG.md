@@ -9,6 +9,10 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## 1.0.0
+### Changed
+- BREAKING: Updated shimmer depedency version to `^4.0.0`. 
+
 ## 0.10.0
 ### Added
 - Added support for the field `placeholder` property, rendered as the input hint text _(on `Attach` and `Attach Image` fields, when the placeholder is an image url it is rendered as a preview image while no file is attached)_.
