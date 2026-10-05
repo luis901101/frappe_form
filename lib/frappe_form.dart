@@ -48,6 +48,7 @@ export 'package:frappe_form/src/presentation/utils/input_method_utils.dart';
 export 'package:frappe_form/src/presentation/utils/formatter_utils.dart';
 export 'package:frappe_form/src/presentation/utils/phone_utils.dart';
 export 'package:frappe_form/src/presentation/utils/validation_utils.dart';
+export 'package:frappe_form/src/presentation/utils/legacy_material.dart';
 export 'package:frappe_form/src/presentation/utils/flutter_view_utils.dart';
 export 'package:frappe_form/src/presentation/widgets/size_renderer.dart';
 export 'package:frappe_form/src/presentation/widgets/custom_drop_down_button_form_field.dart';

@@ -5,6 +5,23 @@ A Flutter package for rendering Frappe Forms.
 
 This package takes care of building the UI of a **Frappe Form**, handle behavior and validations and finally generates the **Response** from the user answers.
 
+## Requirements / setup
+Since version `2.0.0` this package is built with the standalone [material_ui](https://pub.dev/packages/material_ui) package instead of `package:flutter/material.dart`, and requires Flutter `3.47.0` or later. Your app must use `MaterialApp`/`Theme` from `package:material_ui/material_ui.dart` too, otherwise the form widgets won't find your app theme and localizations. Check Flutter's [migration guide](https://docs.flutter.dev/release/breaking-changes/material-ui-and-cupertino-ui) to migrate your app.
+
+A few of the package's dependencies (the phone field, the text editor and the rating bar) are still built on `package:flutter/material.dart`. The package wraps them in a `LegacyMaterialScope`, which hands them your `material_ui` theme, but they also look up the `flutter/material.dart` localizations, so register `LegacyMaterial.localizationsDelegates` next to the `material_ui` ones:
+
+```dart
+MaterialApp(
+  localizationsDelegates: const [
+    ...GlobalMaterialLocalizations.delegates,
+    ...LegacyMaterial.localizationsDelegates,
+  ],
+  // ...
+)
+```
+
+If your app has widgets of its own that are still built on `package:flutter/material.dart`, wrap them in a `LegacyMaterialScope` too, and convert their decorations with `LegacyMaterial.inputDecoration`.
+
 ## Supported DocType form fields
 So far this package supports the following [Field Types](https://docs.frappe.io/erpnext/v14/user/manual/en/customize-erpnext/articles/field-types#field-types)
 | Field Type | Supported |  
@@ -159,7 +176,7 @@ DocFormView(
 11. **`DocFormController? controller`**: This is the controller to be used for questions and response generation within the `DocFormView`, the purpose of this controller here is to allow you to use an instance of an extension of `DocFormController` so you can override the behavior and widgets.
 
 ## Some extra notes
-1. This widget will use the app Theme to build, so if you want to change colors, InputDecorations, etc, you just have to change it in your app Theme. Also all the package widgets are public and exposed so you could override it if necessary.
+1. This widget will use the app Theme (from `material_ui`) to build, so if you want to change colors, InputDecorations, etc, you just have to change it in your app Theme. Also all the package widgets are public and exposed so you could override it if necessary.
 2. The `DocFormView` implementation takes care of validations depending on each `DocField` definition.
 3. Check the example project which shows all the features in action.
 

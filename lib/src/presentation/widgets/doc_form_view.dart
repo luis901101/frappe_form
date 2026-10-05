@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:frappe_form/frappe_form.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Created by luis901101 on 04/21/25.
 class DocFormView extends StatefulWidget {

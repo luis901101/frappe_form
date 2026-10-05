@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:frappe_form/src/presentation/utils/legacy_material.dart';
 import 'package:frappe_form/src/presentation/widgets/doc_field_item/base/doc_field_text_field_view.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
@@ -39,25 +40,27 @@ class DocFieldTextEditorViewState<SF extends DocFieldTextEditorView>
         ? Border.all(color: borderColor)
         : Border(bottom: BorderSide(color: borderColor));
     final fillColor = theme.inputDecorationTheme.fillColor;
-    return HtmlEditor(
-      controller: htmlController, //required
-      callbacks: Callbacks(
-        onChangeContent: (html) {
-          controller.text = html ?? '';
-        },
-      ),
-      htmlEditorOptions: HtmlEditorOptions(
-        hint: placeholder ?? '',
-        initialText: controller.text,
-        characterLimit: maxLength,
-        disabled: isReadOnly,
-      ),
-      otherOptions: OtherOptions(
-        height: 400,
-        decoration: BoxDecoration(
-          borderRadius: borderRadius,
-          border: border,
-          color: fillColor,
+    return LegacyMaterialScope(
+      child: HtmlEditor(
+        controller: htmlController, //required
+        callbacks: Callbacks(
+          onChangeContent: (html) {
+            controller.text = html ?? '';
+          },
+        ),
+        htmlEditorOptions: HtmlEditorOptions(
+          hint: placeholder ?? '',
+          initialText: controller.text,
+          characterLimit: maxLength,
+          disabled: isReadOnly,
+        ),
+        otherOptions: OtherOptions(
+          height: 400,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            border: border,
+            color: fillColor,
+          ),
         ),
       ),
     );

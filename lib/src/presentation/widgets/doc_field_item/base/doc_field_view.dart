@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:frappe_form/src/entity/doc_field.dart';
 import 'package:frappe_form/src/logic/utils/text_utils.dart';
 import 'package:frappe_form/src/model/doc_field_bundle.dart';

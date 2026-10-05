@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 extension FlutterViewUtils on FlutterView {
   /// It's recommended to use a context when using this function.

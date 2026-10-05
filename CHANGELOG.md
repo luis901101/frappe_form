@@ -9,6 +9,22 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## 2.0.0
+### Added
+- Added `LegacyMaterial` and `LegacyMaterialScope` to apply the app's `material_ui` theme to widgets still built on `flutter/material.dart`.
+- Added `searchFieldInputDecoration` to `CustomIntlPhoneField`.
+
+### Changed
+- BREAKING: Migrated from `flutter/material.dart` to `material_ui: ^1.5.0`, so apps must use the `MaterialApp` and `Theme` from `material_ui`.
+- BREAKING: Apps must add `LegacyMaterial.localizationsDelegates` to their `MaterialApp.localizationsDelegates`.
+- BREAKING: Requires Flutter `>=3.47.0` and Dart `>=3.13.0`.
+- BREAKING: `CustomTextField`, `CustomDropDownButtonFormField`, `DocFormViewState.theme`, `DocFieldViewState.theme` and the `TimeOfDay` extensions now use the `material_ui` types.
+- BREAKING: `CustomIntlPhoneField` no longer extends `IntlPhoneField`, and its `decoration` now takes the `material_ui` `InputDecoration`.
+- `CustomIntlPhoneField`'s country picker now shows the localized search hint when the given `pickerDialogStyle` has no search field decoration.
+
+### Removed
+- BREAKING: Removed the deprecated `CustomIntlPhoneField.searchText`.
+
 ## 1.0.0
 ### Changed
 - BREAKING: Updated shimmer depedency version to `^4.0.0`. 

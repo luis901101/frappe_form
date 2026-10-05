@@ -9,7 +9,7 @@ part 'render_rules.g.dart';
 
 @JsonSerializable()
 @CopyWith()
-class RenderRules with EquatableMixin {
+class RenderRules with Equatable {
   final String? type;
 
   RenderRules({this.type});

@@ -1,6 +1,6 @@
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:frappe_form/frappe_form.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Created by luis901101 on 05/06/25.
 class DocFieldRatingView extends DocFieldView {
@@ -41,22 +41,27 @@ class DocFieldRatingViewState<SF extends DocFieldRatingView>
 
   @override
   Widget buildBody(BuildContext context) {
-    return RatingBar(
-      initialRating: initialRating,
-      minRating: 0,
-      maxRating: 5,
-      itemCount: 5,
-      direction: Axis.horizontal,
-      ignoreGestures: isReadOnly,
-      allowHalfRating: true,
-      glowColor: Colors.yellow,
-      ratingWidget: RatingWidget(
-        full: const Icon(Icons.star, color: Colors.amber),
-        half: const Icon(Icons.star_half, color: Colors.amber),
-        empty: const Icon(Icons.star_outline, color: Colors.amber),
+    // RatingBar brings its own Material; the scope keeps its theme reads
+    // (the unrated colour) on the app theme.
+    return LegacyMaterialScope(
+      material: false,
+      child: RatingBar(
+        initialRating: initialRating,
+        minRating: 0,
+        maxRating: 5,
+        itemCount: 5,
+        direction: Axis.horizontal,
+        ignoreGestures: isReadOnly,
+        allowHalfRating: true,
+        glowColor: Colors.yellow,
+        ratingWidget: RatingWidget(
+          full: const Icon(Icons.star, color: Colors.amber),
+          half: const Icon(Icons.star_half, color: Colors.amber),
+          empty: const Icon(Icons.star_outline, color: Colors.amber),
+        ),
+        // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+        onRatingUpdate: onRatingUpdate,
       ),
-      // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-      onRatingUpdate: onRatingUpdate,
     );
   }
 }

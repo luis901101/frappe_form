@@ -10,7 +10,7 @@ part 'doc_type.g.dart';
 
 @JsonSerializable()
 @CopyWith()
-class DocType with EquatableMixin {
+class DocType with Equatable {
   @JsonKey(name: 'name')
   final String? name;
   @JsonKey(name: 'creation')

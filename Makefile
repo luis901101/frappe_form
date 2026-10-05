@@ -1,6 +1,6 @@
 generate-code:
 # 	rm -rf .dart_tool/build
-	dart run build_runner build --delete-conflicting-outputs
+	dart run build_runner build
 
 push:
 	git push -u origin --all

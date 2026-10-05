@@ -6,7 +6,7 @@ import 'package:example/attachment_utils.dart';
 import 'package:example/doc_form_samples.dart';
 import 'package:frappe_form/frappe_form.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:json_field_editor/json_field_editor.dart';
 
 void main() {
@@ -44,6 +44,10 @@ class MyApp extends StatelessWidget {
           theme: theme.copyWith(
             inputDecorationTheme: snapshot.data?.inputDecorationTheme,
           ),
+          localizationsDelegates: const [
+            ...GlobalMaterialLocalizations.delegates,
+            ...LegacyMaterial.localizationsDelegates,
+          ],
           home: const MyHomePage(),
         );
       },
@@ -221,25 +225,32 @@ class _MyHomePageState extends State<MyHomePage> {
                                       padding: const EdgeInsets.symmetric(
                                         vertical: 16,
                                       ),
-                                      child: JsonField(
-                                        controller: jsonController,
-                                        isFormatting: true,
-                                        showErrorMessage: true,
-                                        maxLines: null,
-                                        decoration: InputDecoration(
-                                          labelText: 'Form JSON',
-                                          errorText: jsonError,
-                                          contentPadding: EdgeInsets.only(
-                                            left: 16,
-                                            top: 12,
-                                            bottom: 12,
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(28),
-                                            ),
-                                          ),
-                                          filled: true,
+                                      child: LegacyMaterialScope(
+                                        child: JsonField(
+                                          controller: jsonController,
+                                          isFormatting: true,
+                                          showErrorMessage: true,
+                                          maxLines: null,
+                                          decoration:
+                                              LegacyMaterial.inputDecoration(
+                                                InputDecoration(
+                                                  labelText: 'Form JSON',
+                                                  errorText: jsonError,
+                                                  contentPadding:
+                                                      EdgeInsets.only(
+                                                        left: 16,
+                                                        top: 12,
+                                                        bottom: 12,
+                                                      ),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                          Radius.circular(28),
+                                                        ),
+                                                  ),
+                                                  filled: true,
+                                                ),
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -269,8 +280,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     item.name ==
                                                     nameController.text,
                                               )) {
-                                            nameError =
-                                                'A Form with this name already exists';
+                                            nameError = 'A Form with this name already exists';
                                           }
                                           if (jsonController.text.isEmpty) {
                                             jsonError = 'JSON is required';
@@ -287,8 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     item.value ==
                                                     jsonController.text,
                                               )) {
-                                            jsonError =
-                                                'A Form with this JSON already exists';
+                                            jsonError = 'A Form with this JSON already exists';
                                           }
                                           if (nameError != null ||
                                               jsonError != null) {
@@ -535,25 +544,31 @@ class DocFormPageState extends State<DocFormPage> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: JsonField(
-                      controller: JsonTextFieldController()..text = json,
-                      isFormatting: true,
-                      showErrorMessage: true,
-                      doInitFormatting: true,
-                      readOnly: true,
-                      showCursor: true,
-                      enableInteractiveSelection: true,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(
-                          left: 16,
-                          top: 12,
-                          bottom: 12,
+                    child: LegacyMaterialScope(
+                      child: JsonField(
+                        controller: JsonTextFieldController()..text = json,
+                        isFormatting: true,
+                        showErrorMessage: true,
+                        doInitFormatting: true,
+                        readOnly: true,
+                        showCursor: true,
+                        enableInteractiveSelection: true,
+                        maxLines: null,
+                        decoration: LegacyMaterial.inputDecoration(
+                          InputDecoration(
+                            contentPadding: EdgeInsets.only(
+                              left: 16,
+                              top: 12,
+                              bottom: 12,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(28),
+                              ),
+                            ),
+                            filled: true,
+                          ),
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(28)),
-                        ),
-                        filled: true,
                       ),
                     ),
                   ),

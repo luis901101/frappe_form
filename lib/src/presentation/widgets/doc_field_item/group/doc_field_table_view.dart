@@ -1,5 +1,5 @@
 import 'package:frappe_form/frappe_form.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Created by luis901101 on 07/10/25.
 class DocFieldTableView extends DocFieldView {

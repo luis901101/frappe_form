@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:frappe_form/src/model/doc_field_depends_on_bundle.dart';
 
 /// Holds the three depends-on rules of a field and keeps their results in sync
@@ -12,12 +12,10 @@ class DocFieldDependsOnController {
   ValueChanged<bool>? _onVisibilityDependsOnChanged;
 
   DocFieldDependsOnController({
-    DocFieldDependsOnBundle? requiredDependsOn,
-    DocFieldDependsOnBundle? readOnlyDependsOn,
-    DocFieldDependsOnBundle? visibilityDependsOn,
-  }) : _requiredDependsOn = requiredDependsOn,
-       _readOnlyDependsOn = readOnlyDependsOn,
-       _visibilityDependsOn = visibilityDependsOn;
+    this._requiredDependsOn,
+    this._readOnlyDependsOn,
+    this._visibilityDependsOn,
+  });
 
   DocFieldDependsOnBundle? get requiredDependsOn => _requiredDependsOn;
   DocFieldDependsOnBundle? get readOnlyDependsOn => _readOnlyDependsOn;
