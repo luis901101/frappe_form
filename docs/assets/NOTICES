@@ -1963,6 +1963,7 @@ image_picker_macos
 image_picker_platform_interface
 material_ui
 pointer_interceptor_ios
+url_launcher
 url_launcher_android
 url_launcher_ios
 url_launcher_linux
@@ -6140,7 +6141,6 @@ plugin_platform_interface
 pointer_interceptor
 pointer_interceptor_platform_interface
 pointer_interceptor_web
-url_launcher
 url_launcher_platform_interface
 
 Copyright 2013 The Flutter Authors. All rights reserved.
