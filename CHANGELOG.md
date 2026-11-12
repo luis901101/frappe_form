@@ -9,6 +9,10 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## 2.0.1
+### Fixed
+- Fixed check and radio group fields inside a section hiding their tap feedback behind the section background and logging "ListTile background color or ink splashes may be invisible".
+
 ## 2.0.0
 ### Added
 - Added `LegacyMaterial` and `LegacyMaterialScope` to apply the app's `material_ui` theme to widgets still built on `flutter/material.dart`.

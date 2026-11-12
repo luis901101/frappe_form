@@ -67,6 +67,45 @@ void main() {
     expect(controller.value, closeTo(3 / 5, 1e-9));
   });
 
+  testWidgets(
+    'DocFieldSectionView gives its list tiles a Material to paint on',
+    (tester) async {
+      await tester.pumpWidget(
+        _app(
+          DocFieldSectionView(
+            field: DocField(type: FieldType.sectionBreak, label: 'Section'),
+            children: [
+              DocFieldCheckView(
+                field: DocField(type: FieldType.check, label: 'Check'),
+              ),
+              DocFieldRadioGroupView(
+                field: DocField(
+                  type: FieldType.select,
+                  label: 'Radio',
+                  options: 'One\nTwo',
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+      // The section lays out again once its title has been measured.
+      await tester.pump();
+
+      expect(tester.takeException(), isNull);
+      // The nearest Material is the section's own, above its fill, not the
+      // Scaffold's canvas below it.
+      for (final tile in [CheckboxListTile, RadioListTile<String>]) {
+        final material = tester.widget<Material>(
+          find
+              .ancestor(of: find.byType(tile), matching: find.byType(Material))
+              .first,
+        );
+        expect(material.type, MaterialType.transparency);
+      }
+    },
+  );
+
   group('CustomHtml', () {
     const html = '<details><summary>More</summary><p>Hidden body</p></details>';
 

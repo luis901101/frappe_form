@@ -100,19 +100,25 @@ class DocFieldSectionViewState<SF extends DocFieldSectionView>
               margin: EdgeInsets.only(top: (groupTitleHeight ?? 0) / 2),
               child: descriptionView == null && childrenView == null
                   ? null
-                  : descriptionView != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        descriptionView,
-                        if (childrenView != null)
-                          Padding(
-                            padding: EdgeInsets.only(top: itemSpacing),
-                            child: childrenView,
-                          ),
-                      ],
-                    )
-                  : childrenView,
+                  // List tiles paint their ink and hover colors on the nearest
+                  // Material, which must sit above this container's fill.
+                  : Material(
+                      type: MaterialType.transparency,
+                      textStyle: DefaultTextStyle.of(context).style,
+                      child: descriptionView != null
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                descriptionView,
+                                if (childrenView != null)
+                                  Padding(
+                                    padding: EdgeInsets.only(top: itemSpacing),
+                                    child: childrenView,
+                                  ),
+                              ],
+                            )
+                          : childrenView,
+                    ),
             ),
             if (field.title.isNotEmpty || isRequired)
               Positioned(
