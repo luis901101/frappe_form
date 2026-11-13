@@ -1,5 +1,7 @@
 // The one file in lib/ that may import SDK Material. Everything else imports
 // package:material_ui/material_ui.dart.
+// Deprecated since Flutter 3.50; this bridge needs the SDK library on purpose.
+// ignore: deprecated_member_use, migrate_design_widgets
 import 'package:flutter/material.dart' as legacy;
 import 'package:flutter_localizations/flutter_localizations.dart' as legacy;
 import 'package:material_ui/material_ui.dart';
@@ -42,6 +44,7 @@ abstract final class LegacyMaterial {
   /// widgets are built under the app's `Navigator`, so they resolve the
   /// app-root `Localizations`.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      // ignore: deprecated_member_use
       legacy.GlobalMaterialLocalizations.delegates;
 
   /// The SDK counterpart of [theme], cached per instance. `Theme.of` hands

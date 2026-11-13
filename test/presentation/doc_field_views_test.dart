@@ -1,4 +1,5 @@
 // The SDK Material types the bridged dependencies build with.
+// ignore: deprecated_member_use, migrate_design_widgets
 import 'package:flutter/material.dart' as legacy;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

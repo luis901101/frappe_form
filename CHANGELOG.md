@@ -9,6 +9,10 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## 2.0.2
+### Fixed
+- Fixed apps failing to compile when `html` 0.15.7 is resolved.
+
 ## 2.0.1
 ### Fixed
 - Fixed check and radio group fields inside a section hiding their tap feedback behind the section background and logging "ListTile background color or ink splashes may be invisible".

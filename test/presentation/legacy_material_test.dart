@@ -1,4 +1,5 @@
 // The SDK Material types the bridge converts to.
+// ignore: deprecated_member_use, migrate_design_widgets
 import 'package:flutter/material.dart' as legacy;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:frappe_form/frappe_form.dart';

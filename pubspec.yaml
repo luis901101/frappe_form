@@ -1,6 +1,6 @@
 name: frappe_form
 description: "A library to render Frappe DocForm and generate a response"
-version: 2.0.1
+version: 2.0.2
 repository: https://github.com/luis901101/frappe_form
 issue_tracker: https://github.com/luis901101/frappe_form/issues
 topics:
@@ -26,6 +26,9 @@ dependencies:
   adeptannotations: ^7.0.0
   equatable: ^2.1.0
   flutter_html: ^3.0.0
+  # flutter_html 3.0.0 does not compile against html 0.15.7 (qs.matches was removed).
+  # Lift this upper bound once a flutter_html release supports it.
+  html: '>=0.15.5 <0.15.7'
   url_launcher: ^6.3.3
   material_ui: ^1.5.0
   flutter_localizations:
